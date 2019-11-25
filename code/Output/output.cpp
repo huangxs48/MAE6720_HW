@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <assert.h>
 
 #include "output.h"
 #include "../Mesh/mesh.h" //use t_now
@@ -36,5 +37,23 @@ void Output::Write1DArray(Mesh *pmesh, PartialDifferentialEquation *peq, int itr
 
   output.close();
 
-  
+}
+
+void Output::Write2DArray(Mesh *pmesh, PartialDifferentialEquation *peq, int itr, array2d &u, std::string username){
+
+  string name = username;
+  name += to_string(itr);
+  name += ".dat";
+
+  ofstream output (name);
+  assert(output.is_open());
+
+  for (int j=0; j<u.size(); j++){
+    for (int i=0; i<u.at(j).size()-1; i++){
+      output << u.at(j).at(i) <<",";
+    }
+    output << u.at(j).back()<< "\n";
+  }
+
+
 }

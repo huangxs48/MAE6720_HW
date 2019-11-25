@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+typedef std::vector<std::vector<double>> array2d;
+
 class PartialDifferentialEquation{
 
   public:
@@ -34,6 +36,18 @@ class HeatConduction : public PartialDifferentialEquation{
     std::vector<double> y;
 
 
+};
+
+
+class SteadyHeatConduction2d : public PartialDifferentialEquation{
+  public:
+    SteadyHeatConduction2d();
+    ~SteadyHeatConduction2d();
+
+    array2d u_init;
+    int Nx, Ny;
+    double Residual;
+    
 };
 
 #endif

@@ -4,6 +4,10 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <array>
+
+typedef std::vector<std::vector<double>> array2d;
+typedef std::vector<std::vector<std::array<double, 2>>> coord2d;
 
 class Mesh{
   public:
@@ -25,10 +29,15 @@ class Mesh{
     //set up mesh indexs, dx
     void MeshInitialize();
 
-    //return an array of coords
-    //void UniformMeshConsructor(double min, double max, int N, std::vector<double> coord);
+    //return an array of coords (TODO) rewrite 1D to void function
     std::vector<double> UniformMeshConstructor(double min, double max, int N);
-    void LogMeshConstructor(std::vector<double> output, double min, double max, int N, double ratio);
+  
+    void Uniform2dMeshConstructor(double min_x1, double max_x1, double min_x2, double max_x2, int NX1, int NX2);
+    coord2d MeshGrid; // to store the mesh grid
+    std::vector<double> coord_NX1;
+    std::vector<double> coord_NX2;
+
+    void printcoord(coord2d coord);
 
   private:
 

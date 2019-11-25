@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O -g -std=c++11 -I /usr/local/include
+CXXFLAGS = -O -std=c++11 -I /usr/local/include
 LDFLAGS =
 LDLIBS = 
 
@@ -11,6 +11,7 @@ SRC_FILES := $(wildcard *.cpp) \
              $(wildcard Mesh/*.cpp) \
              $(wildcard PDESolver/*.cpp) \
              $(wildcard Output/*.cpp) \
+             $(wildcard BoundaryCondition/*.cpp) \
 
 OBJ_DIR := obj/
 OBJ_FILES := $(addprefix $(OBJ_DIR),$(notdir $(SRC_FILES:.cpp=.o)))
