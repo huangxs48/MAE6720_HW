@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O -std=c++11 -I /usr/local/include
+CXXFLAGS = -O -g -std=c++11 -I /usr/local/include
 LDFLAGS =
 LDLIBS = 
 

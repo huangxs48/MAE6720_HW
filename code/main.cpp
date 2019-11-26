@@ -141,20 +141,25 @@ int main(){
     pbval->Apply2DBval(pmymesh, u_init);
 
     array2d u_next;
-    psol->lineGaussSiedel(pmyeq, pmymesh, pms, u_init, u_next, omega);
+    //print2darray(u_init);
+    psol->pointJacobi(pmyeq, pmymesh, u_init, u_next, omega);
     u_init = u_next;
     u_next.clear();       
     int itr = 1;   
+    //print2darray(u_init);
 
-    printf("itr,res_before,res\n");   
-    while (pmyeq->Residual>=1.e-6){
-      double res_before = pmyeq->Residual;
+    
+    
+    printf("itr,err\n");   
+    while (pmyeq->Residual>=1.e-8){
+      double err = 0.0;
       u_next.clear();
-      psol->lineGaussSiedel(pmyeq, pmymesh, pms, u_init, u_next, omega);
+      psol->pointJacobi(pmyeq, pmymesh, u_init, u_next, omega);
+      err = checkerror(pmymesh, u_next);
       u_init = u_next;
       itr += 1; 
       double res_after = pmyeq->Residual;
-      printf("%d,%g\n", itr,res_after);
+      printf("%d,%24.16e\n", itr,err);
     }
 
     printf("itr=%d, error=%g, residual=%g\n", itr, checkerror(pmymesh, u_next), pmyeq->Residual);  
@@ -180,33 +185,19 @@ int main(){
     
     
     /*
-    for(int itr =0; itr<=800; itr++){
+    for(int itr =0; itr<=10; itr++){
+      double err = 0.0;
       u_next.clear();
-      psol->lineGaussSiedel(pmyeq, pmymesh, pms, u_init, u_next);
+      psol->lineJacobi(pmyeq, pmymesh, pms, u_init, u_next, omega);
+      err = checkerror(pmymesh, u_next);
       u_init = u_next;
+      printf("%d,%24.16e\n", itr,err);
       //print2darray(u_init);
-      printf("itr=%d, error=%g, residual=%g\n", itr, checkerror(pmymesh, u_next), pmyeq->Residual);
+      //printf("itr=%d, error=%g, residual=%g\n", itr, checkerror(pmymesh, u_next), pmyeq->Residual);
     }
-
-
-    array2d error_arr;
-    for (int j=jl; j<=ju; j++){
-      std::vector<double> this_row;
-      for (int i=il; i<=iu; i++){
-        double diff;
-        double this_x = pmymesh->MeshGrid.at(j).at(i)[0];
-        double this_y = pmymesh->MeshGrid.at(j).at(i)[1];
-        double this_val = sin(PI*this_x)*cosh(PI*this_y)/cosh(PI);
-        diff = abs(this_val - u_next.at(j).at(i));
-        this_row.push_back(diff);
-      }
-      error_arr.push_back(this_row);
-    }
-    
-    //std::string name = "GS";
-    //pout->Write2DArray(pmymesh, pmyeq, itr, error_arr, name);
-    
     */
+
+
     
 
  return 0;

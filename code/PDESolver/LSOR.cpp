@@ -41,17 +41,17 @@ void PDESolver::lineGaussSiedel(SteadyHeatConduction2d *peq, Mesh *pmesh,
 
   //u_in has boundary points
   //prepares TDMA LHS array
-  std::vector<double> a(NX1-1, -0.25);
+  std::vector<double> a(NX1-1, -0.25*omega);
   a.insert(a.begin(), 0.0);
   std::vector<double> b(NX1, 1.0);
-  std::vector<double> c(NX1-1, -0.25);
+  std::vector<double> c(NX1-1, -0.25*omega);
   c.push_back(0.0);
 
   //for the first row
-  std::vector<double> as(NX1-1, -0.25);
+  std::vector<double> as(NX1-1, -0.25*omega);
   as.insert(as.begin(), 0.0);
-  std::vector<double> bs(NX1, 0.75);
-  std::vector<double> cs(NX1-1, -0.25);
+  std::vector<double> bs(NX1, 1.0-(0.25*omega));
+  std::vector<double> cs(NX1-1, -0.25*omega);
   cs.push_back(0.0);
   
   //sweep rows
@@ -64,14 +64,14 @@ void PDESolver::lineGaussSiedel(SteadyHeatConduction2d *peq, Mesh *pmesh,
     if (j == js){
 
       for (int i=0; i<NX1; i++){
-        ys[i] = 0.25 * (u_in.at(j+1).at(i+is));
+        ys[i] = 0.25 * omega * (u_in.at(j+1).at(i+is)) + (1 - omega)*u_in.at(j).at(i+is);
       }
       pms->TDMA(as, bs, cs, ys, x);
 
     }else{
 
       for (int i=0; i<NX1; i++){
-        y[i] = 0.25 * (u_in.at(j-1).at(i+is) + u_in.at(j+1).at(i+is));
+        y[i] = 0.25 * omega * (u_in.at(j-1).at(i+is) + u_in.at(j+1).at(i+is)) + (1 - omega)*u_in.at(j).at(i+is);
       }
       pms->TDMA(a, b, c, y, x);
     }
