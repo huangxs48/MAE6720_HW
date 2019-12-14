@@ -25,3 +25,8 @@ SteadyHeatConduction2d::SteadyHeatConduction2d(){
 SteadyHeatConduction2d::~SteadyHeatConduction2d(){
 }
 
+BurgersEquation::BurgersEquation(){
+}
+
+BurgersEquation::~BurgersEquation(){
+}

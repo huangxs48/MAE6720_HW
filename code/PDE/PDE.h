@@ -50,4 +50,16 @@ class SteadyHeatConduction2d : public PartialDifferentialEquation{
     
 };
 
+class BurgersEquation : public PartialDifferentialEquation{
+  public:
+    BurgersEquation();
+    ~BurgersEquation();
+
+    double Gamma, C;
+    double P_e, P_me; //Peclet number and mesh Peclet number
+
+    double Residual;
+
+};
+
 #endif

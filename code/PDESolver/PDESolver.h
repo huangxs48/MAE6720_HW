@@ -36,6 +36,13 @@ class PDESolver{
     void lineJacobi(SteadyHeatConduction2d *peq, Mesh *pmesh, MatrixSolver *pms, array2d &u_in, array2d &u_out, double omega);
     void lineGaussSiedel(SteadyHeatConduction2d *peq, Mesh *pmesh, MatrixSolver *pms, array2d &u_in, array2d &u_out, double omega);
 
+    //For Burgers Equation
+    void FTBCS(BurgersEquation *peq, Mesh *pmesh, std::vector<double> &u);
+    void SecondUpwind(BurgersEquation *peq, Mesh *pmesh, std::vector<double> &u);
+    void FTCCS(BurgersEquation *peq, Mesh *pmesh, std::vector<double> &u);
+    void MacCormack(BurgersEquation *peq, Mesh *pmesh, std::vector<double> &u);
+    void LeapFrog(BurgersEquation *peq, Mesh *pmesh, std::vector<double> &u);
+
 };
 
 #endif
