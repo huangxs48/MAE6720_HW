@@ -53,7 +53,8 @@ void Mesh::MeshInitialize(){
 
 }
 
-//return a coordinate vector, inner points are is->ie, total points are il->iu
+//Return a coordinate vector, inner points are is->ie, total points are il->iu
+//Acess to coordinates by calling: pmesh->UniformMeshConstructor().at(i)
 std::vector<double> Mesh::UniformMeshConstructor(double min, double max, int N){
   std::vector<double> coord;
   double dx = (max - min)/(N + 1);
@@ -64,6 +65,9 @@ std::vector<double> Mesh::UniformMeshConstructor(double min, double max, int N){
 }
 
 //(TODO) need to re-think the data structure here!
+//Write an 2d array MeshGrid, each element is an array object {x,y}. 
+//Also write coord_NX2 and coord_NX1, two vecotrs that stores row and column coord accordingly
+//Access to coordinates by calling: xcoord: pmesh->MeshGrid.at(i).at(j)[0] ycoord: pmesh->MeshGrid.at(i).at(j)[1]
 void Mesh::Uniform2dMeshConstructor(double min_x1, double max_x1, double min_x2, double max_x2, int NX1, int NX2){
   //array2d coord;
   double dx1 = (max_x1-min_x1)/(NX1+1);
@@ -87,6 +91,7 @@ void Mesh::Uniform2dMeshConstructor(double min_x1, double max_x1, double min_x2,
   
 }
 
+//Debug Function
 void Mesh::printcoord(coord2d coord){
   printf("----------\n");
   for(int j=0; j<coord.size(); j++){
