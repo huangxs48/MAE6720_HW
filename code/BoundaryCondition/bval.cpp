@@ -28,7 +28,7 @@ void BoundaryCondition::Add2DBval(Mesh *pmesh, array2d &u_in, array2d &u_out){
 	for (int i=0; i<u_in.at(0).size(); i++){ //now only write inner points in x direction
     double xcoord = row_coord.at(is+i); //inner points
     x2_inner.push_back(pbval->bvalfunc_x2_inner(xcoord, jl, u_in.at(0).at(i)));
-    x2_outter.push_back(pbval->bvalfunc_x2_outter(xcoord, ju, u_in.at(NX1-1).at(i)));
+    x2_outter.push_back(pbval->bvalfunc_x2_outter(xcoord, ju, u_in.at(NX2-1).at(i)));
   }
   
   u_in.insert(u_in.begin(), x2_inner);
@@ -37,7 +37,7 @@ void BoundaryCondition::Add2DBval(Mesh *pmesh, array2d &u_in, array2d &u_out){
   for (int j=0; j<u_in.size(); j++){
     double ycoord = col_coord.at(j);
     u_in.at(j).insert(u_in.at(j).begin(), pbval->bvalfunc_x1_inner(il,ycoord,u_in.at(j).at(0)));
-    u_in.at(j).push_back(pbval->bvalfunc_x1_outter(il,ycoord,u_in.at(j).at(NX2-1)));
+    u_in.at(j).push_back(pbval->bvalfunc_x1_outter(il,ycoord,u_in.at(j).at(NX1-1)));
   }
   u_out = u_in;
 }
